@@ -1,7 +1,3 @@
----
-layout: index
----
-
 #Infraestructura como servicio
 
 
