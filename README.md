@@ -50,26 +50,27 @@ Usando Chef para provisionamiento
  tanto, se puede usar como introducción y para probar
  configuraciones. 
  
- <div class='nota' markdown='1'>
+
  
- Hay varios tutoriales que te permiten, con relativa rapidez, comenzar
- a trabajar con Chef-solo en un servidor;
- [este te proporciona una serie de ficheros que puedes usar](http://www.opinionatedprogrammer.com/2011/06/chef-solo-tutorial-managing-a-single-server-with-chef/)
- y
- [este otro es más directo, dando una serie de órdenes](http://www.mechanicalrobotfish.com/blog/2013/01/01/configure-a-server-with-chef-solo-in-five-minutes/). En
- todo caso, se trata básicamente tener acceso a un servidor o máquina
- virtual, instalar una serie de aplicaciones en él y ejecutarlas sobre
- un fichero de configuración
+> Hay varios tutoriales que te permiten, con relativa rapidez, comenzar
+>  a trabajar con Chef-solo en un servidor;
+>  [este te proporciona una serie de ficheros que puedes usar](http://www.opinionatedprogrammer.com/2011/06/chef-solo-tutorial-managing-a-single-server-with-chef/)
+>  y
+>  [este otro es más directo, dando una serie de órdenes](http://www.mechanicalrobotfish.com/blog/2013/01/01/configure-a-server-with-chef-solo-in-five-minutes/). En
+>  todo caso, se trata básicamente tener acceso a un servidor o máquina
+>  virtual, instalar una serie de aplicaciones en él y ejecutarlas sobre
+>  un fichero de configuración
  
- </div>
- 
- 
-En una máquina tipo ubuntu, hay que comenzar instalando Ruby y Ruby
+
+En una máquina de tipo Ubuntu, hay que comenzar instalando Ruby y Ruby
 Gems, el gestor de librerías  
 
 	sudo apt-get install ruby1.9.1 ruby1.9.1-dev rubygems
 	
-`chef` se distribuye como una gema, por lo que se puede instalar
+(la versión de Ruby puede cambiar, dependiendo de la versión de
+Ubuntu; también puedes usar algún entorno virtual como `rbenv` y
+trabajar desde ahí) `chef` se distribuye como una gema, por lo que se
+puede instalar 
 siempre como
 
 	sudo gem install ohai chef
@@ -84,11 +85,9 @@ Una [forma más rápida de instalar Chef](http://gettingstartedwithchef.com/firs
 
 La última tendrá que ser `sudo bash` en caso de que se quiera instalar como administrador (que será lo normal).
 
-<div class='ejercicios' markdown='1'>
 
-Instalar chef en la máquina virtual que vayamos a usar
+>Instalar chef en la máquina virtual que vayamos a usar.
 
-</div>
 
 Una *receta* de Chef
 [consiste en crear una serie de ficheros](http://www.mechanicalrobotfish.com/blog/2013/01/01/configure-a-server-with-chef-solo-in-five-minutes/):
@@ -157,12 +156,9 @@ ejecutarlo,
 serie de mensajes para cada una de las órdenes y, si todo va bien,
 tendremos este útil editor instalado.
 
-<div class='ejercicios' markdown='1'>
+>Crear una receta para instalar el servidor web de alts prestaciones `nginx`, tu editor favorito y algún
+>directorio y fichero que uses de forma habitual. 
 
-Crear una receta para instalar `nginx`, tu editor favorito y algún
-directorio y fichero que uses de forma habitual. 
-
-</div>
 
 Para usar `chef-solo` hay simplemente que instalar unos cuantos
 programas, pero en gran parte ya está automatizado:
@@ -172,13 +168,15 @@ por ejemplo basándose en
 que instala todas las herramientas necesarias para comenzar a ejecutar
 chef. 
 
-<div class='nota' markdown='1'>
+> Este
+> [curso en video](http://nathenharvey.com/blog/2012/12/06/learning-chef-part-1/)
+>te enseña también a trabajar con Chef.
 
-Este
-[curso en video](http://nathenharvey.com/blog/2012/12/06/learning-chef-part-1/)
-te enseña también a trabajar con Chef
+Cuando se está trabajando con un IaaS, en muchos casos tendrán
+imágenes ya preparadas con Chef instalado. Por ejemplo, en
+[Vagrant Boxes](http://vagrantbox.es) tienen varias imágenes de
+CentOS, Debian y Ubuntu con chef ya instalado.
 
-</div>
 
 <div class='nota' markdown='1'>
 
