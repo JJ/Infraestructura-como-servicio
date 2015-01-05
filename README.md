@@ -321,7 +321,7 @@ y se ejecuta con
 (recordando siempre el temita del nombre de usuario), lo que dará, si
 todo ha ido bien, un resultado como el siguiente
 
-![Instalación de emacs usando ansible](../img/ansible.png)
+![Instalación de emacs usando ansible](img/ansible.png)
 
 En el fichero YAML lo que se está expresando es un array asociativo
 con las claves `hosts`, `sudo` y `tasks`. En el primero ponemos el
