@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Infraestructura como servicio by JJ</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Infraestructura como servicio</h1>
+        <h2>IaaS y cómo usarlos; configuración, orquestación y todo eso. </h2>
+        <a href="https://github.com/JJ/Infraestructura-como-servicio" class="button"><small>View project on</small> GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a id="infraestructura-como-servicio" class="anchor" href="#infraestructura-como-servicio" aria-hidden="true"><span class="octicon octicon-link"></span></a>Infraestructura como servicio</h1>
+
+<h2>
+<a id="objetivos" class="anchor" href="#objetivos" aria-hidden="true"><span class="octicon octicon-link"></span></a>Objetivos</h2>
+
+<ol>
+<li>Diseñar, construir y analizar las prestaciones de un centro de
+proceso de datos virtual. 
+
+<ol>
+<li>Documentar y mantener una plataforma virtual.</li>
+</ol>
+</li>
+<li>Realizar tareas de administración en infraestructura virtual.</li>
+<li>Aprender lenguajes de configuración usados en infraestructuras virtuales.</li>
+<li>Saber cómo aplicarlos en un caso determinado.</li>
+<li>Conocer los sistemas de gestión de la configuración,
+provisionamiento y monitorizació más usados hoy en día.</li>
+</ol>
+
+<p></p>
+
+<h2>
+<a id="introducción" class="anchor" href="#introducci%C3%B3n" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introducción</h2>
+
+<p>Las infraestructuras virtuales se gestionan a través de una serie de herramientas denominadas, en general,
+<a href="http://en.wikipedia.org/wiki/Configuration_management">gestores de configuración</a>. <a href="http://en.wikipedia.org/wiki/Vagrant_%28software%29">Vagrant</a>
+es uno de ellos, pero también hay otros: <a href="http://www.getchef.com/chef/">Chef</a>, Salt y Puppet, por
+ejemplo. Todos son libres, pero
+<a href="http://en.wikipedia.org/wiki/Comparison_of_open_source_configuration_management_software">tienen características específicas</a>
+que hay que tener en cuenta a la hora de elegir uno u otro. En el caso
+específico de
+<a href="http://en.wikipedia.org/wiki/Configuration_management#Operating_System_configuration_management">sistemas operativos</a>
+se trata de gestionar automáticamente todas las tareas de
+configuración de un sistema, automatizando la edición de ficheros de
+configuración, instalación de software y configuración del mismo,
+creación de usuarios y autenticación, de forma que se pueda hacer de
+forma automática y masiva. </p>
+
+<p>A continuación veremos diferentes ejemplos de sistemas de
+configuración, empezando por Chef. En
+<a href="Contenedores.md">temas anteriores</a> hemos visto <code>Juju</code>, un ejemplo de
+sistema de configuración también, aunque específico de Ubuntu. </p>
+
+<h2>
+<a id="usando-chef-para-provisionamiento" class="anchor" href="#usando-chef-para-provisionamiento" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usando Chef para provisionamiento</h2>
+
+<p><a href="http://www.getchef.com/chef/">Chef</a> es una herramienta que, en
+ general, se usa en un servidor que se encarga no sólo de gestionar la
+ configuración, sino también las versiones. Empezar a usarlo
+ <a href="http://wiki.opscode.com/display/chef/Documentation">es complicado</a>.
+ Sin embargo, como
+ introducción a la gestión de configuraciones se puede usar
+ <a href="http://docs.opscode.com/chef_solo.html"><code>chef-solo</code></a>, una versión
+ aislada que permite trabajar en una máquina desde la misma y que, por
+ tanto, se puede usar como introducción y para probar
+ configuraciones. </p>
+
+<p></p><div>
+
+<p>Hay varios tutoriales que te permiten, con relativa rapidez, comenzar
+ a trabajar con Chef-solo en un servidor;
+ <a href="http://www.opinionatedprogrammer.com/2011/06/chef-solo-tutorial-managing-a-single-server-with-chef/">este te proporciona una serie de ficheros que puedes usar</a>
+ y
+ <a href="http://www.mechanicalrobotfish.com/blog/2013/01/01/configure-a-server-with-chef-solo-in-five-minutes/">este otro es más directo, dando una serie de órdenes</a>. En
+ todo caso, se trata básicamente tener acceso a un servidor o máquina
+ virtual, instalar una serie de aplicaciones en él y ejecutarlas sobre
+ un fichero de configuración</p>
+
+<p></p>
+</div>
+
+<p>En una máquina tipo ubuntu, hay que comenzar instalando Ruby y Ruby
+Gems, el gestor de librerías  </p>
+
+<pre><code>sudo apt-get install ruby1.9.1 ruby1.9.1-dev rubygems
+</code></pre>
+
+<p><code>chef</code> se distribuye como una gema, por lo que se puede instalar
+siempre como</p>
+
+<pre><code>sudo gem install ohai chef
+</code></pre>
+
+<p><a href="http://docs.opscode.com/ohai.html">ohai</a> acompaña a <code>chef</code> y es usado
+desde el mismo para comprobar características del nodo antes de
+ejecutar cualquier receta.</p>
+
+<p>Una <a href="http://gettingstartedwithchef.com/first-steps-with-chef.html">forma más rápida de instalar Chef</a> es descargarlo directamente desde la página web:</p>
+
+<pre><code>curl -L https://www.opscode.com/chef/install.sh | bash
+</code></pre>
+
+<p>La última tendrá que ser <code>sudo bash</code> en caso de que se quiera instalar como administrador (que será lo normal).</p>
+
+<div>
+
+Instalar chef en la máquina virtual que vayamos a usar
+
+</div>
+
+<p>Una <em>receta</em> de Chef
+<a href="http://www.mechanicalrobotfish.com/blog/2013/01/01/configure-a-server-with-chef-solo-in-five-minutes/">consiste en crear una serie de ficheros</a>:
+una <em>lista de ejecución</em> que especifica qué es lo que se va a
+configurar; esta lista se incluye en un fichero <code>node.json</code>, 
+o <em>recetario</em> (<em>cookbook</em>) que incluye una serie de <em>recetas</em> que
+configuran, efectivamente, los recursos y, finalmente, un fichero de
+configuración que dice dónde están los dos ficheros anteriores y
+cualquier otro recursos que haga falta. Estos últimos dos ficheros
+están escritos en Ruby. </p>
+
+<p>Vamos a empezar a escribir una recetilla del Chef. Generalmente,
+<a href="http://reiddraper.com/first-chef-recipe/">escribir una receta es algo más complicado</a>,
+pero comenzaremos por una receta muy simple que instale el
+imprescindible <code>emacs</code> y le asigne un nombre al nodo. Creamos el
+directorio <code>chef</code> en algún sitio conveniente y dentro de ese
+directorio irán diferentes ficheros.</p>
+
+<p>El fichero que contendrá efectivamente la receta se
+llamará <a href="../../ejemplos/chef/default.rb"><code>default.rb</code></a></p>
+
+<pre><code>package 'emacs'
+directory '/home/jmerelo/Documentos'
+file "/home/jmerelo/Documentos/LEEME" do
+    owner "jmerelo"
+    group "jmerelo"
+    mode 00544
+    action :create
+    content "Directorio para documentos diversos"
+end
+</code></pre>
+
+<p>El nombre del fichero indica que se trata de la receta por omisión,
+pero el nombre de la receta viene determinado por el directorio en el
+que se meta, que podemos crear de un tirón con</p>
+
+<pre><code>mkdir -p chef/cookbooks/emacs/recipes
+</code></pre>
+
+<p>Este fichero tiene tres partes: instala el paquete <code>emacs</code>, crea un
+directorio para documentos y dentro de él un fichero que explica, por
+si hubiera duda, de qué se trata. Evidentemente, tanto caminos como
+nombres de usuario se deben cambiar a los correspondientes en la
+máquina virtual que estemos configurando.</p>
+
+<p>El siguiente fichero, <a href="../../ejemplos/chef/node.json"><code>node.json</code></a>,
+incluirá una referencia a esta receta</p>
+
+<pre><code>{
+    "run_list": [ "recipe[emacs]" ]
+}
+</code></pre>
+
+<p>Este fichero hace referencia a un recetario, <code>emacs</code> y dado que no se
+especifica nada más se ejecutará la receta por defecto. </p>
+
+<p>Finalmente, el <a href="../../ejemplos/solo.rb">fichero de configuración <code>solo.rb</code></a> incluirá referencias a ambos.</p>
+
+<pre><code>file_cache_path "/home/jmerelo/chef"
+cookbook_path "/home/jmerelo/chef/cookbooks"
+json_attribs "/home/jmerelo/chef/node.json"
+</code></pre>
+
+<p>Una vez más, <em>cambiando los caminos por los que correspondan</em>. Para
+ejecutarlo,</p>
+
+<pre><code>sudo chef-solo -c chef/solo.rb
+</code></pre>
+
+<p>(si se ejecuta desde el directorio raíz). Esta orden producirá una
+serie de mensajes para cada una de las órdenes y, si todo va bien,
+tendremos este útil editor instalado.</p>
+
+<div>
+
+Crear una receta para instalar `nginx`, tu editor favorito y algún
+directorio y fichero que uses de forma habitual. 
+
+</div>
+
+<p>Para usar <code>chef-solo</code> hay simplemente que instalar unos cuantos
+programas, pero en gran parte ya está automatizado:
+<a href="http://www.wolfe.id.au/2012/09/10/how-i-use-chef-solo-with-ubuntu-12.04/">aquí explica como usarlo en Ubuntu 12.04</a>,
+por ejemplo basándose en
+<a href="https://gist.github.com/wolfeidau/3328844">este Gist (programas cortos en GitHug)</a>
+que instala todas las herramientas necesarias para comenzar a ejecutar
+chef. </p>
+
+<div>
+
+Este
+[curso en video](http://nathenharvey.com/blog/2012/12/06/learning-chef-part-1/)
+te enseña también a trabajar con Chef
+
+</div>
+
+<div>
+
+De ninguna manera JSON es un lenguaje universal para gestión de
+configuraciones. Prácticamente todo el resto de los sistemas de
+configuración usan
+[YAML (*yet another markup language*)](http://yaml.org). Recientemente
+se ha
+[publicado una introducción al tema](http://pharalax.com/blog/yaml-introduccion-al-lenguaje-yaml/)
+que será suficiente para el uso que le vamos a dar más adelante
+
+</div>
+
+<div>
+
+Escribir en YAML la siguiente estructura de datos en JSON
+
+    { uno: "dos",
+      tres: [ 4, 5, "Seis", { siete: 8, nueve: [ 10, 11 ] } ] }
+      
+</div>
+
+<p>Normalmente estas recetas van a estar bajo control de un sistema de
+gestión de fuentes; de esta forma se pueden probar diferentes
+configuraciones, crear nuevas versiones de la misma pero, sobre todo,
+tener claro en cada momento qué configuración es la que se está
+ejecutando en producción, que será habitualmente la que esté en una
+rama designada de la misma. </p>
+
+<h2>
+<a id="otros-sistemas-de-gestión-de-configuración" class="anchor" href="#otros-sistemas-de-gesti%C3%B3n-de-configuraci%C3%B3n" aria-hidden="true"><span class="octicon octicon-link"></span></a>Otros sistemas de gestión de configuración</h2>
+
+<p>Las principales alternativas a Chef son <a href="http://ansible.com">Ansible</a>,
+<a href="http://www.saltstack.com/">Salt</a> y <a href="http://docs.puppetlabs.com/guides/installation.html">Puppet</a>. Todos ellos se comparan en
+<a href="http://www.infoworld.com/d/data-center/review-puppet-vs-chef-vs-ansible-vs-salt-231308">este artículo</a>,
+aunque los principales contendientes son
+<a href="http://www.infoworld.com/d/data-center/puppet-or-chef-the-configuration-management-dilemma-215279?source=fssr">Puppet y Chef, sin que ninguno de los dos sea perfecto</a>. </p>
+
+<p>De todas ellas, vamos a
+<a href="http://davidwinter.me/articles/2013/11/23/introduction-to-ansible/">ver Ansible</a>
+que parece ser uno de los que se está desarrollando con más intensidad
+últimamente. <a href="http://en.wikipedia.org/wiki/Ansible_%28software%29">Ansible es</a>
+sistema de gestión remota de configuración que permite gestionar
+simultáneamente miles de sistemas diferenets. Está basado en YAML para
+la descripción de los sistemas y escrito en Python. </p>
+
+<p>Se instala como un módulo de Python, usando por ejemplo la utilidad de
+instalación de módulos <code>pip</code> (que habrá que instalar si no se tiene)</p>
+
+<pre><code>sudo pip install paramiko PyYAML jinja2 httplib2 ansible
+</code></pre>
+
+<p>El resto de las utilidades son también necesarias y en realidad se
+instalan automáticamente al instalar ansible. Estas utilidades se
+tienen que instalar <em>en el anfitrión</em>, no hace falta instalarlas en el
+invitado, que lo único que necesitará, en principio, es tener activada
+la conexión por ssh y tener una cuenta válida y forma válida de
+acceder a ella.</p>
+
+<p>Cada máquina que se añada al control de Ansible se tiene que añadir a
+un
+<a href="http://docs.ansible.com/intro_inventory.html">fichero, llamado inventario</a>,
+que contiene las diferentes máquinas controladas por el mismo. Por
+ejemplo</p>
+
+<pre><code> $ echo "ansible-iv.cloudapp.net" &gt; ~/ansible_hosts
+</code></pre>
+
+<p>se puede ejecutar desde el <em>shell</em> para meter (<code>echo</code>) una cadena con
+una dirección (en este caso, una máquina virtual de Azure) en el
+fichero <code>ansible_hosts</code> situado en mi directorio raíz. El lugar de ese
+fichero es arbitrario, por lo que habrá que avisar a Ansible donde
+está usando una variable de entorno:</p>
+
+<pre><code>export ANSIBLE_HOSTS=~/ansible_hosts
+</code></pre>
+
+<p>Y, con un nodo, ya se puede comprobar si Ansible funciona con </p>
+
+<pre><code>$ ansible all -u jjmerelo -m ping
+</code></pre>
+
+<p>Esta orden hace un <em>ping</em>, es decir, simplemente comprueba si la
+máquina es accesible desde la máquina local. <code>-u</code> incluye el nombre
+del usuario (si es diferente del de la máquina local); habrá que
+añadir <code>--ask-pass</code> si no se ha configurado la máquina remota para
+poder acceder a ella sin clave. </p>
+
+<p>De forma básica, lo que hace Ansible es simplemente ejecutar comandos
+de forma remota y simultáneamente. Para hacerlo, podemos usar el
+<a href="http://docs.ansible.com/intro_inventory.html">inventario para agrupar los servidores</a>, por ejemplo</p>
+
+<pre><code>[azure]
+iv-ansible.cloudapp.net
+</code></pre>
+
+<p>crearía un grupo <code>azure</code> (con un solo ordenador), en el cual podemos
+ejecutar comandos de forma remota</p>
+
+<pre><code>$ ansible azure -u jjmerelo -a df
+</code></pre>
+
+<p>nos mostraría en todas las máqunias de azure la organización del
+sistema de ficheros (que es lo que hace el comando <code>df</code>). Una vez más,
+<code>-u</code> es opcional. </p>
+
+<p>Esta orden usa un <em>módulo</em> de ansible y se puede ejecutar también de
+esta forma:</p>
+
+<pre><code>$ ansible azure -m shell ls
+</code></pre>
+
+<p>haciendo uso del módulo <code>shell</code>. Hay muchos
+<a href="http://docs.ansible.com/modules.html">más módulos</a> a los que se le
+pueden enviar comandos del tipo "variable = valor". Por ejemplo, se
+puede trabajar con servidores web o
+<a href="http://docs.ansible.com/intro_adhoc.html#file-transfer">copiar ficheros</a>
+o
+<a href="http://docs.ansible.com/intro_adhoc.html#managing-packages">incluso desplegar aplicaciones directamente usando el módulo <code>git</code></a></p>
+
+<div>
+
+Desplegar los fuentes de la aplicación de  DAI o cualquier otra aplicación que se
+encuentre en un servidor git público en la máquina virtual Azure (o
+una máquina virtual local) usando ansible.
+
+</div>
+
+<p>Finalmente, el concepto similar a las recetas de Chef en Ansible son los
+<a href="http://davidwinter.me/articles/2013/11/23/introduction-to-ansible/"><em>playbooks</em></a>,
+ficheros en YAML que le dicen a la máquina virtual qué es lo que hay
+que instalar en <em>tareas</em>, de la forma siguiente</p>
+
+<pre><code>---
+- hosts: azure
+  sudo: yes
+  tasks:
+    - name: Update emacs
+      apt: pkg=emacs state=present
+</code></pre>
+
+<p>Esto se guarda en un fichero y se
+<a href="../../ejemplos/ansible/emacs.yml">le llama, por ejemplo, emacs.yml</a>,
+y se ejecuta con </p>
+
+<p>ansible-playbook ../../ejemplos/ansible/emacs.yml </p>
+
+<p>(recordando siempre el temita del nombre de usuario), lo que dará, si
+todo ha ido bien, un resultado como el siguiente</p>
+
+<p><img src="img/ansible.png" alt="Instalación de emacs usando ansible"></p>
+
+<p>En el fichero YAML lo que se está expresando es un array asociativo
+con las claves <code>hosts</code>, <code>sudo</code> y <code>tasks</code>. En el primero ponemos el
+bloque de servidores en el que vamos a actuar, en el segundo si hace
+falta hacer sudo o no y en el tercero las tareas que vamos a ejecutar,
+en este caso una sola. El apartado de tareas es un vector de hashes,
+cada uno de los cuales tiene en <code>name</code> el nombre de la tarea, a título
+informativo y en las otras claves lo que se va a hacer; <code>apt</code> indicará
+que hay que instalar un paquete (<code>pkg</code>) llamado <code>emacs</code> y que hay que
+comprobar si está presente o no (<code>state</code>). El que se trabaje con
+<em>estados</em> y no de forma imperativa hace que los <em>playbooks</em> sean
+<em>idempotentes</em>, es decir, si se ejecutan varias veces darán el mismo
+resultado que si se ejecutan una sola vez. </p>
+
+<div>
+
+1. Desplegar la aplicación de DAI  con todos los módulos necesarios
+usando un *playbook* de Ansible.
+
+2. [¿Ansible o Chef? ¿O cualquier otro que no hemos usado aquí?](https://github.com/IV-GII/GII-2013/issues/131). 
+
+</div>
+
+<h2>
+<a id="orquestación-de-máquinas-virtuales" class="anchor" href="#orquestaci%C3%B3n-de-m%C3%A1quinas-virtuales" aria-hidden="true"><span class="octicon octicon-link"></span></a>Orquestación de máquinas virtuales</h2>
+
+<p>A un nivel superior al provisionamiento de máquinas virtuales está la configuración,
+orquestación y gestión de las mismas, herramientas como
+<a href="http://vagrantup.com">Vagrant</a> ayudan a hacerlo, aunque también
+Puppet e incluso Juju pueden hacer muchas de las funciones de
+Vagrant. Algunas alternativas son
+<a href="http://www.websecurify.com/extra/vortex.html">Vortex</a> </p>
+
+<p>La ventaja de Vagrant es que permite gestionar el ciclo de vida
+completo de una máquina virtual, desde la creación hasta su
+destrucción pasando por el provisionamiento y la monitorización o
+conexión con la misma. Además, permite trabajar con todo tipo de
+hipervisores y provisionadores tales como los que hemos visto
+anteriormente.</p>
+
+<p>Con Vagrant <a href="https://gist.github.com/dergachev/3866825">te puedes descargar directamente</a>
+<a href="http://www.vagrantbox.es/">una máquina configurada de esta lista</a>. Por
+ejemplo, </p>
+
+<pre><code>vagrant box add centos65 https://github.com/2creatives/vagrant-centos/releases/download/v6.5.1/centos65-x86_64-20131205.box
+</code></pre>
+
+<p>El formato determinará en qué tipo de hipervisor se puede ejecutar; en
+general, Vagrant usa VirtualBox, y los <code>.box</code> se ejecutan precisamente
+en ese formato. Otras imágenes están configuradas para trabajar con
+VMWare, pero son las menos. A continuación,</p>
+
+<pre><code>vagrant init centos65
+</code></pre>
+
+<p>crea un fichero <code>Vagrantfile</code> (y así te lo dice) que permite trabajar
+y llevar a cabo cualquier configuración adicional. Una vez hecho eso
+ya podemos inicializar la máquina y trabajar con ella (pero antes voy
+a apagar la máquina Azure que tengo ejecutándose desde que empecé a
+contar lo anterior)</p>
+
+<pre><code>vagrant up
+</code></pre>
+
+<p>y se puede empezar a trabajar en ella con </p>
+
+<pre><code>vagrant ssh
+</code></pre>
+
+<div>
+
+    Instalar una máquina virtual Debian usando Vagrant y conectar con ella.
+    
+</div>
+
+<p>Una vez creada la máquina virtual se puede entrar en ella y
+configurarla e instalar todo lo necesario. Pero, por supuesto,
+sabiendo lo que sabemos sobre provisionamiento, Vagrant permite
+<a href="http://docs.vagrantup.com/v2/provisioning/index.html">provisionarla de muchas maneras diferentes</a>. En
+general, Vagrant usará opciones de configuración diferente dependiendo
+del provisionador, subirá un fichero a un directorio temporal del
+mismo y lo ejecutará (tras ejecutar todo lo necesario para el mismo). </p>
+
+<p>La provisión tiene lugar cuando se <em>alza</em> una máquina virtual (con
+<code>vagrant up</code>) o bien explícitamente haciendo <code>vagrant provision</code>. En
+cualquier caso se lee del Vagrantfile y se llevan a cabo las acciones
+especificadas en el fichero de configuración. </p>
+
+<p>En general, trabajar con un provisionador requiere especificar de cuál
+se trata y luego dar una serie de órdenes específicas. Comenzaremos
+por el
+<a href="http://docs.vagrantup.com/v2/provisioning/shell.html"><em>shell</em></a>, que
+es el más simple y, en realidad, equivale a entrar en la máquina y dar
+las órdenes a mano. Instalaremos, como hemos hecho en otras ocasiones,
+el utilísimo editor <code>emacs</code>usando este
+<a href="../../ejemplos/vagrant/provision/Vagrantfile"><code>Vagrantfile</code></a>:</p>
+
+<pre><code>VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+    config.vm.box = "centos65"
+
+    config.vm.provision "shell",
+        inline: "yum install -y emacs"
+end
+</code></pre>
+
+<p>Recordemos que se trata de un programa en Ruby en el cual configuramos
+la máquina virtual. La 4ª línea indica el nombre de la máquina con la
+que vamos a trabajar (que puede ser la usada en el caso anterior);
+recordemos también que, por omisión, se trabaja con VirtualBox (si se
+hiciera con algún otro tipo de hipervisor habría que usar el <em>plugin</em>
+correspondiente e inicializar la máquina de alguna otra forma). La
+parte en la que efectivamente se hace la provisión va justamente a
+continuación. La orden <code>config.vm.provision</code> indica que se va a usar
+el sistema de provisión del <code>shell</code>, es decir, órdenes de la línea de
+comandos; se le pasa un hash en Ruby  (variable: valor, tal como en
+javascript, separados por comas) en el que la clave <code>inline</code> indica el
+comando que se va a ejecutar, en este caso <code>yum</code>, el programa para
+instalar paquetes en CentOS, y al que se le indica <code>-y</code> para que
+conteste <em>Yes</em> a todas las preguntas sobre la instalación. </p>
+
+<p>Este Vagrantfile no necesita nada especial para ejecutarse: se le
+llama directamente cuando se ejecuta <code>vagrant up</code> o explícitamente
+cuando se llama con <code>vagrant provision</code>. Lo único que hará es instalar
+este programa bajándose todas sus dependencias (y tardará un rato).</p>
+
+<div>
+
+    Crear un script para provisionar `nginx` o cualquier otro servidor
+    web que pueda ser útil para alguna otra práctica
+    
+</div>
+
+<div>
+
+El provisionamiento por *shell* admite
+[muchas más opciones](http://docs.vagrantup.com/v2/provisioning/shell.html):
+se puede usar un fichero externo o incluso alojado en un sitio web
+(por ejemplo, un Gist alojado en Github). Por ejemplo,
+[este para provisionar nginx y node](https://gist.github.com/DamonOehlman/5754302)
+(no leer hasta después de hacer el ejercicio anterior).
+
+</div>
+
+<p>El poblema con los guiones de <em>shell</em> (y no sé por qué diablos pongo
+guiones si pongo shell, podía poner scripts de shell directametne y
+todo el mundo me entendería, o guiones de la concha y nadie me
+entendería) es que son específicos de una máquina. Por eso Vagrant
+permite muchas otras formas de configuración, incluyendo casi todos
+los sistemas de provisionamiento populares (Chef, Puppet, Ansible,
+Salt) y otros sistemas com Docker, que también hemos visto. La ventaja
+de estos sistemas de más alto nivel es que permiten trabajar
+independientemente del sistema operativo. Cada uno de ellos tendrá sus
+opciones específicas, pero veamos cómo se haría lo anterior usando el
+provisionador
+<a href="http://docs.vagrantup.com/v2/provisioning/chef_solo.html">chef-solo</a>.</p>
+
+<p>Para empezar, hay que provisionar la máquina virtual para que funcione
+con chef-solo y hay que hacerlo desde shell o Ansible;
+<a href="../../ejemplos/vagrant/provision/chef-with-shell/Vagrantfile">este ejemplo</a>
+que usa
+<a href="../../ejemplos/vagrant/provision/chef-with-shell/chef-solo.sh">este fichero shell</a>
+puede provisionar, por ejemplo, una máquina CentOS. </p>
+
+<p>Una vez preinstalado chef (lo que también podíamos haber hecho con
+<a href="http://www.vagrantbox.es/">una máquina que ya lo tuviera instalado, de las que hay muchas en <code>vagrantbox.es</code></a>git co
+y de hecho es la mejor opción porque chef-solo no se puede instalar en
+la versión 6.5 de Centos fácilmente por no tener una versión
+actualizada de Ruby)
+incluimos en el Vagrantfile. las órdenes para usarlo en
+<a href="../../ejemplos/vagrant/provision/chef/Vagrantfile">este Vagrantfile</a> </p>
+
+<pre><code>VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+    config.vm.box = "centos63"
+
+    config.vm.provision "chef_solo" do |chef|
+        chef.add_recipe "emacs"
+    end
+
+end
+</code></pre>
+
+<p>Este fichero usa un bloque de Ruby para pasarle variables y
+simplemente declara que se va a usar la receta <code>emacs</code>, que
+previamente tendremos que haber creado en un subdirectorio cookbooks
+que descienda exactamente del mismo directorio y que contenga
+simplemente <code>package 'emacs'</code> que tendrá que estar en un fichero </p>
+
+<pre><code>cookbooks/emacs/recipes/default.rb
+</code></pre>
+
+<p>Con todo esto se puede configurar emacs. Pero, la verdad, seguro que
+es más fácil hacerlo en Ansible y/o en otro sistema operativo que no
+sea CentOS porque yo, por lo pronto, no he logrado instalar chef-solo
+en ninguna de las máquinas pre-configuradas de VagrantBoxes. </p>
+
+<div>
+
+    Configurar tu máquina virtual usando vagrant con el provisionador
+    ansible
+    
+</div>
+
+<p>Desde Vagrant se puede crear también una
+<a href="http://docs.vagrantup.com/v2/boxes/base.html">caja base</a> con lo
+mínimo necesario para poder funcionar, incluyendo el soporte para ssh
+y provisionadores como Chef o Puppet. Se puede crear directamente en
+VirtualBox y usar
+<a href="http://docs.vagrantup.com/v2/cli/package.html"><code>vagrant package</code></a>
+para <em>empaquetarla</em> y usarla para su consumo posterior. </p>
+
+<h2>
+<a id="a-donde-ir-desde-aquí" class="anchor" href="#a-donde-ir-desde-aqu%C3%AD" aria-hidden="true"><span class="octicon octicon-link"></span></a>A donde ir desde aquí</h2>
+
+<p>Este es el último tema del curso, pero a partir de aquí se puede
+seguir aprendiendo sobre devops en <a href="http://devops.com/">el blog</a> o
+<a href="http://www.ibm.com/ibm/devops/us/en/">en IBM</a>. Libros como
+<a href="https://www.amazon.es/dp/B009D6ZB0G?tag=atalaya-21&amp;camp=3634&amp;creative=24822&amp;linkCode=as4&amp;creativeASIN=B009D6ZB0G&amp;adid=0PB61Y2QD9K49W3EP8MN&amp;">DevOps for Developers</a>
+pueden ser también de ayuda.</p>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/JJ/Infraestructura-como-servicio/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/JJ/Infraestructura-como-servicio/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/JJ/Infraestructura-como-servicio"></a> is maintained by <a href="https://github.com/JJ">JJ</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
