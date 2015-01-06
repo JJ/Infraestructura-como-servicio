@@ -9,7 +9,7 @@ layout: index
 
 1. Diseñar, construir y analizar las prestaciones de un centro de
   proceso de datos virtual. 
-  2. Documentar y mantener una plataforma virtual.
+2. Documentar y mantener una plataforma virtual.
 3. Realizar tareas de administración en infraestructura virtual.
 4. Aprender lenguajes de configuración usados en infraestructuras virtuales.
 2. Saber cómo aplicarlos en un caso determinado.
@@ -336,7 +336,6 @@ resultado que si se ejecutan una sola vez.
 > Desplegar la aplicación de DAI  con todos los módulos necesarios
 > usando un *playbook* de Ansible.
 
-</div>
 
 Orquestación de máquinas virtuales
 ---------------
