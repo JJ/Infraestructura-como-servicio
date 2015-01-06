@@ -16,8 +16,6 @@ layout: index
 3. Conocer los sistemas de gestión de la configuración,
 provisionamiento y monitorizació más usados hoy en día.
 
-</div>
-
 Introducción
 ---
 
