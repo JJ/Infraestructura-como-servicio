@@ -182,26 +182,24 @@ imágenes ya preparadas con Chef instalado. Por ejemplo, en
 CentOS, Debian y Ubuntu con chef ya instalado.
 
 
-<div class='nota' markdown='1'>
+> De ninguna manera JSON es un lenguaje universal para gestión de
+> configuraciones. Prácticamente todo el resto de los sistemas de
+> configuración usan
+> [YAML (*yet another markup language*)](http://yaml.org). Recientemente
+> se ha
+> [publicado una introducción al tema](http://pharalax.com/blog/yaml-introduccion-al-lenguaje-yaml/)
+> que será suficiente para el uso que le vamos a dar más adelante
 
-De ninguna manera JSON es un lenguaje universal para gestión de
-configuraciones. Prácticamente todo el resto de los sistemas de
-configuración usan
-[YAML (*yet another markup language*)](http://yaml.org). Recientemente
-se ha
-[publicado una introducción al tema](http://pharalax.com/blog/yaml-introduccion-al-lenguaje-yaml/)
-que será suficiente para el uso que le vamos a dar más adelante
+Ya hemos usado YAML en la configuración de
+[Travis](http://travis-ci.org). En todo caso, los lenguajes de
+configuración suelen ser simples y se aprenden rápidamente.
 
-</div>
-
-<div class='ejercicios' markdown='1'>
-
-Escribir en YAML la siguiente estructura de datos en JSON
+>Escribir en YAML la siguiente estructura de datos en JSON
 
 	{ uno: "dos",
       tres: [ 4, 5, "Seis", { siete: 8, nueve: [ 10, 11 ] } ] }
 	  
-</div>
+
 
 Normalmente estas recetas van a estar bajo control de un sistema de
 gestión de fuentes; de esta forma se pueden probar diferentes
@@ -294,13 +292,10 @@ puede trabajar con servidores web o
 o
 [incluso desplegar aplicaciones directamente usando el módulo `git`](http://docs.ansible.com/intro_adhoc.html#managing-packages)
 
-<div class='ejercicios' markdown='1'>
+> Desplegar los fuentes de la aplicación para gestionar las porras (o cualquier otra aplicación) que se
+> encuentre en un servidor git público en la máquina virtual Azure (o
+> una máquina virtual local) usando ansible.
 
-Desplegar los fuentes de la aplicación de  DAI o cualquier otra aplicación que se
-encuentre en un servidor git público en la máquina virtual Azure (o
-una máquina virtual local) usando ansible.
-
-</div>
 
 Finalmente, el concepto similar a las recetas de Chef en Ansible son los
 [*playbooks*](http://davidwinter.me/articles/2013/11/23/introduction-to-ansible/),
@@ -338,12 +333,8 @@ comprobar si está presente o no (`state`). El que se trabaje con
 *idempotentes*, es decir, si se ejecutan varias veces darán el mismo
 resultado que si se ejecutan una sola vez. 
 
-<div class='ejercicios' markdown='1'>
-
-1. Desplegar la aplicación de DAI  con todos los módulos necesarios
-usando un *playbook* de Ansible.
-
-2. [¿Ansible o Chef? ¿O cualquier otro que no hemos usado aquí?](https://github.com/IV-GII/GII-2013/issues/131). 
+> Desplegar la aplicación de DAI  con todos los módulos necesarios
+> usando un *playbook* de Ansible.
 
 </div>
 
@@ -389,12 +380,7 @@ y se puede empezar a trabajar en ella con
 
 	vagrant ssh
 	
-<div class='ejercicios' markdown='1'>
-
-	Instalar una máquina virtual Debian usando Vagrant y conectar con ella.
-	
-</div>
-
+> Instalar una máquina virtual Debian usando Vagrant y conectar con ella.
 	
 Una vez creada la máquina virtual se puede entrar en ella y
 configurarla e instalar todo lo necesario. Pero, por supuesto,
@@ -447,14 +433,10 @@ llama directamente cuando se ejecuta `vagrant up` o explícitamente
 cuando se llama con `vagrant provision`. Lo único que hará es instalar
 este programa bajándose todas sus dependencias (y tardará un rato).
 
-<div class='ejercicios' markdown='1'>
-
-	Crear un script para provisionar `nginx` o cualquier otro servidor
-	web que pueda ser útil para alguna otra práctica
+>	Crear un script para provisionar `nginx` o cualquier otro servidor
+>	web que pueda ser útil para alguna otra práctica
 	
-</div>
 
-<div class='nota' markdown='1'>
 
 El provisionamiento por *shell* admite
 [muchas más opciones](http://docs.vagrantup.com/v2/provisioning/shell.html):
@@ -463,12 +445,14 @@ se puede usar un fichero externo o incluso alojado en un sitio web
 [este para provisionar nginx y node](https://gist.github.com/DamonOehlman/5754302)
 (no leer hasta después de hacer el ejercicio anterior).
 
-</div>
+El poblema con los guiones de *shell*
 
-El poblema con los guiones de *shell* (y no sé por qué diablos pongo
-guiones si pongo shell, podía poner scripts de shell directametne y
-todo el mundo me entendería, o guiones de la concha y nadie me
-entendería) es que son específicos de una máquina. Por eso Vagrant
+> y no sé por qué diablos pongo
+>guiones si pongo shell, podía poner scripts de shell directametne y
+>todo el mundo me entendería, o guiones de la concha y nadie me
+>entendería
+
+es que son específicos de un sistema operativo y versión del mismo determinada. Por eso Vagrant
 permite muchas otras formas de configuración, incluyendo casi todos
 los sistemas de provisionamiento populares (Chef, Puppet, Ansible,
 Salt) y otros sistemas com Docker, que también hemos visto. La ventaja
@@ -517,12 +501,8 @@ es más fácil hacerlo en Ansible y/o en otro sistema operativo que no
 sea CentOS porque yo, por lo pronto, no he logrado instalar chef-solo
 en ninguna de las máquinas pre-configuradas de VagrantBoxes. 
 
-<div class='ejercicios' markdown='1'>
-
-	Configurar tu máquina virtual usando vagrant con el provisionador
-	ansible
+>	Configurar tu máquina virtual usando vagrant con el provisionador ansible
 	
-</div>
 
 Desde Vagrant se puede crear también una
 [caja base](http://docs.vagrantup.com/v2/boxes/base.html) con lo
