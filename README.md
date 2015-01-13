@@ -30,9 +30,9 @@ creación de usuarios y autenticación, de forma que se pueda hacer de
 forma automática y masiva. 
 
 A continuación veremos diferentes ejemplos de sistemas de
-configuración, empezando por Chef. En
-[temas anteriores](Contenedores.md) hemos visto `Juju`, un ejemplo de
-sistema de configuración también, aunque específico de Ubuntu. 
+configuración, empezando por Chef. Dejaremos de lado otros sistemas como `Juju`, un ejemplo de
+sistema de configuración también, aunque específico de Ubuntu y `docker`, un sistema de creación y gestión de máquinas virtuales *ligeras*. Es bastante útil, pero no cubre toda la gama de sistemas virtuales como hacen estos sistemas de configuración.
+
 
 Usando Chef para provisionamiento
 -----
