@@ -33,6 +33,10 @@ A continuación veremos diferentes ejemplos de sistemas de
 configuración, empezando por Chef. Dejaremos de lado otros sistemas como `Juju`, un ejemplo de
 sistema de configuración también, aunque específico de Ubuntu y `docker`, un sistema de creación y gestión de máquinas virtuales *ligeras*. Es bastante útil, pero no cubre toda la gama de sistemas virtuales como hacen estos sistemas de configuración.
 
+>Docker, por otro lado, es una herramienta excelente para crear
+>configuraciones virtuales dentro de un solo
+>ordenador. [Échale un vistazo al tutorial](https://www.docker.com/tryit/)
+>para hacerte una idea de sus capacidades. 
 
 Usando Chef para provisionamiento
 -----
@@ -61,27 +65,25 @@ Usando Chef para provisionamiento
  
 
 En una máquina de tipo Ubuntu, hay que comenzar instalando Ruby y Ruby
-Gems, el gestor de librerías  
-
-	sudo apt-get install ruby1.9.1 ruby1.9.1-dev rubygems
-	
-(la versión de Ruby puede cambiar, dependiendo de la versión de
-Ubuntu; también puedes usar algún entorno virtual como `rbenv` y
-trabajar desde ahí) `chef` se distribuye como una gema, por lo que se
+Gems; como siempre, es mucho más fácil si ya se ha instalado el gestor de versiones `rvm` o `rbenv`.  `chef` se distribuye como una gema (un módulo o biblioteca de Ruby), por lo que se
 puede instalar 
 siempre como
 
-	sudo gem install ohai chef
-	
+	gem install ohai chef
+
+>con `sudo` si se está trabajando con el Ruby "del sistema", como siempre.
+
 [ohai](http://docs.opscode.com/ohai.html) acompaña a `chef` y es usado
-desde el mismo para comprobar características del nodo antes de
+desde el mismo para comprobar características del nodo (el sistema en el que vamos a instalar algo)  antes de
 ejecutar cualquier receta.
 
 Una [forma más rápida de instalar Chef](http://gettingstartedwithchef.com/first-steps-with-chef.html) es descargarlo directamente desde la página web:
 
 	curl -L https://www.opscode.com/chef/install.sh | bash
 
-La última tendrá que ser `sudo bash` en caso de que se quiera instalar como administrador (que será lo normal).
+La última tendrá que ser `sudo bash` en caso de que se quiera instalar
+como administrador. Chef tendrá que estar instalado en el nodo sobre
+el que vayamos a ejecutar las recetas. 
 
 
 >Instalar chef en la máquina virtual que vayamos a usar.
@@ -164,7 +166,7 @@ programas, pero en gran parte ya está automatizado:
 por ejemplo basándose en
 [este Gist (programas cortos en GitHug)](https://gist.github.com/wolfeidau/3328844)
 que instala todas las herramientas necesarias para comenzar a ejecutar
-chef. 
+Chef. 
 
 > Este
 > [curso en video](http://nathenharvey.com/blog/2012/12/06/learning-chef-part-1/)
@@ -193,7 +195,6 @@ configuración suelen ser simples y se aprenden rápidamente.
 	{ uno: "dos",
       tres: [ 4, 5, "Seis", { siete: 8, nueve: [ 10, 11 ] } ] }
 	  
-
 
 Normalmente estas recetas van a estar bajo control de un sistema de
 gestión de fuentes; de esta forma se pueden probar diferentes
@@ -354,7 +355,7 @@ ejemplo,
 
 	vagrant box add centos65 https://github.com/2creatives/vagrant-centos/releases/download/v6.5.1/centos65-x86_64-20131205.box
 
-El formato determinará en qué tipo de hipervisor se puede ejecutar; en
+(el URL puede no funcionar en un momento determinado; si no funciona usar alguno con un formato similar) El formato determinará en qué tipo de hipervisor se puede ejecutar; en
 general, Vagrant usa VirtualBox, y los `.box` se ejecutan precisamente
 en ese formato. Otras imágenes están configuradas para trabajar con
 VMWare, pero son las menos. A continuación,
