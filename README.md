@@ -65,9 +65,8 @@ Usando Chef para provisionamiento
  
 
 En una máquina de tipo Ubuntu, hay que comenzar instalando Ruby y Ruby
-Gems; como siempre, es mucho más fácil si ya se ha instalado el gestor de versiones `rvm` o `rbenv`.  `chef` se distribuye como una gema (un módulo o biblioteca de Ruby), por lo que se
-puede instalar 
-siempre como
+Gems; como siempre, es mucho más fácil si ya se ha instalado el gestor de versiones `rvm` o [`rbenv`](https://github.com/sstephenson/rbenv). `chef` se distribuye como una gema (un módulo o biblioteca de Ruby), por lo que se
+puede instalar siempre como
 
 	gem install ohai chef
 
@@ -86,8 +85,7 @@ como administrador. Chef tendrá que estar instalado en el nodo sobre
 el que vayamos a ejecutar las recetas. 
 
 
->Instalar chef en la máquina virtual que vayamos a usar.
-
+>Instalar `chef` en la máquina virtual que vayamos a usar o descargarse una máquina virtual con `chef` ya instalado. 
 
 Una *receta* de Chef
 [consiste en crear una serie de ficheros](http://www.mechanicalrobotfish.com/blog/2013/01/01/configure-a-server-with-chef-solo-in-five-minutes/):
@@ -107,7 +105,7 @@ directorio `chef` en algún sitio conveniente y dentro de ese
 directorio irán diferentes ficheros.
 
 El fichero que contendrá efectivamente la receta se
-llamará [`default.rb`](../../ejemplos/chef/default.rb)
+llamará [`default.rb`](chef/cookbooks/emacs/recipes/default.rb)
 
 	package 'emacs'
 	directory '/home/jmerelo/Documentos'
@@ -131,7 +129,7 @@ si hubiera duda, de qué se trata. Evidentemente, tanto caminos como
 nombres de usuario se deben cambiar a los correspondientes en la
 máquina virtual que estemos configurando.
 
-El siguiente fichero, [`node.json`](../../ejemplos/chef/node.json),
+El siguiente fichero, [`node.json`](chef/node.json),
 incluirá una referencia a esta receta
 
 	{
@@ -141,7 +139,7 @@ incluirá una referencia a esta receta
 Este fichero hace referencia a un recetario, `emacs` y dado que no se
 especifica nada más se ejecutará la receta por defecto. 
 
-Finalmente, el [fichero de configuración `solo.rb`](../../ejemplos/solo.rb) incluirá referencias a ambos.
+Finalmente, el [fichero de configuración `solo.rb`](chef/solo.rb) incluirá referencias a ambos.
 
 	file_cache_path "/home/jmerelo/chef"
 	cookbook_path "/home/jmerelo/chef/cookbooks"
@@ -152,13 +150,35 @@ ejecutarlo,
 
 	sudo chef-solo -c chef/solo.rb
 
-(si se ejecuta desde el directorio raíz). Esta orden producirá una
+(si se ejecuta desde el directorio raíz), *que hay que ejecutar en la máquina en la que se vaya a ejecutar*). Esta orden producirá una
 serie de mensajes para cada una de las órdenes y, si todo va bien,
 tendremos este útil editor instalado.
 
->Crear una receta para instalar el servidor web de alts prestaciones `nginx`, tu editor favorito y algún
->directorio y fichero que uses de forma habitual. 
+El resultado será algo similar a esto:
 
+	Starting Chef Client, version 11.4.4
+	Compiling Cookbooks...
+	Converging 3 resources
+	Recipe: emacs::default
+	  * package[emacs] action install
+		- install version 45.0 of package emacs
+
+	  * directory[/home/vagrant/Documentos] action create
+		- create new directory /home/vagrant/Documentos
+
+	  * file[/home/vagrant/Documentos/LEEME] action create
+		- create new file /home/vagrant/Documentos/LEEME with content checksum 570035
+			--- /tmp/chef-tempfile20150113-3101-18xluwi	2015-01-13 19:39:34.000000000 +0000
+			+++ /tmp/chef-diff20150113-3101-i9zwnc	2015-01-13 19:39:34.000000000 +0000
+			@@ -0,0 +1 @@
+			+Directorio para documentos diversos
+
+	Chef Client finished, 3 resources updated
+
+Donde se informa de la actividad de cada una de las tres acciones: instalar `emacs`, crear un directorio y finalmente crear un fichero con un contenido determinado. 
+
+>Crear una receta para instalar el servidor web de alts prestaciones `nginx`, tu editor favorito (Atom, por ejemplo) y algún
+>directorio y fichero que uses de forma habitual. 
 
 Para usar `chef-solo` hay simplemente que instalar unos cuantos
 programas, pero en gran parte ya está automatizado:
