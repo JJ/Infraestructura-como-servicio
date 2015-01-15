@@ -23,7 +23,11 @@ lanzamiento de
 [EC2, Elastic Compute Cloud](http://es.wikipedia.org/wiki/Amazon_EC2),
 la *nube* de Amazon que vino asociada al de
 [S3, Simple Storage Service](http://en.wikipedia.org/wiki/Amazon_S3),
-que fue lanzado a la vez, 
+que fue lanzado a la vez, un servicio de almacenamiento de datos (que puede usarse también de forma independiente), y [Amazon EBS (Elastic Block Store)](http://en.wikipedia.org/wiki/Amazon_Elastic_Block_Store), un almacenamiento permanente para imágenes de sistemas operativos completos, usables, por ejemplo, para almacenar el estado de una máquina virtual completo. La presencia de la palabra *elastic* en dos de estas ofertas indica la principal diferencia entre la nube y el uso de un VPS o Servidor Privado Virtual: mientras que un VPS es simplemente una máquina virtual con recursos limitados, los recursos a los que tienes acceso desde la nube son *elásticos* y se van ampliando según la demanda que haya de la forma que se haya definido y de forma transparente para la aplicación y para el usuario, con el único límite que el usuario haya definido y pueda asumir.
+
+Después de Amazon han llegado muchas otros productos al mercado: [Azure de Microsoft](http://en.wikipedia.org/wiki/Microsoft_Azure) y [Google Compute Engine](http://en.wikipedia.org/wiki/Google_Compute_Engine) son posiblemente los más populares. Los productos son similares en precio y en prestaciones, lo que ocurre es que difieren en el ecosistema de productos desarrollados alrededor, en los que Amazon está, por lo pronto, más desarrollado que el resto.
+
+Todos estos sistemas permiten gestionar nubes "públicas", pero hay también productos que permiten crear y gestionar tu propia nube privada. El principal es [OpenStack](http://es.wikipedia.org/wiki/OpenStack), un producto de fuentes abiertas (como todo lo relacionado con la nube) que permite gestionar los diferentes aspectos de una nube privada: instancias de máquinas virtuales e imágenes. OpenStack es un producto interesante para dotar centros de datos y poder crear y provisionar máquinas virtuales sin depender de proveedores externos, pero en todo caso la gestión de máquinas virtuales es totalmente independiente de quién físicamente las cree o provea. 
 
 Las infraestructuras virtuales se gestionan a través de una serie de herramientas denominadas, en general,
 [gestores de configuración](http://en.wikipedia.org/wiki/Configuration_management). [Vagrant](http://en.wikipedia.org/wiki/Vagrant_%28software%29)
@@ -46,7 +50,15 @@ sistema de configuración también, aunque específico de Ubuntu y `docker`, un 
 >Docker, por otro lado, es una herramienta excelente para crear
 >configuraciones virtuales dentro de un solo
 >ordenador. [Échale un vistazo al tutorial](https://www.docker.com/tryit/)
->para hacerte una idea de sus capacidades. 
+>para hacerte una idea de sus capacidades.
+
+##Trabajando con la nube
+
+A partir de un IaaS, hay todo tipo de servicios que se sitúan entre una infraestructura como servicio y otros más avanzados de tipo PaaS o incluso SaaS; en muchos casos ofrecen demos o máquinas virtuales que se pueden usar por tiempo limitado. Por ejemplo, [Bitnami](http://bitnami.com), una empresa originalmente española, ofrece máquinas virtuales con aplicaciones ya instaladas que se pueden lanzar como demo.
+
+>Probar a lanzar una máquina virtual de demo, configurando las aplicaciones que se desee, y viendo qué posibilidades ofrece. Las MVs de demostración tienen que lanzarse obligatoriamente en la costa este americana y tener una aplicación instalada. Aparte, tarda unos buenos minutos en construirse (lo que no sé si se descontará o no de la hora total).
+
+
 
 Usando Chef para provisionamiento
 -----
