@@ -201,7 +201,6 @@ imágenes ya preparadas con Chef instalado. Por ejemplo, en
 [Vagrant Boxes](http://vagrantbox.es) tienen varias imágenes de
 CentOS, Debian y Ubuntu con chef ya instalado.
 
-
 > De ninguna manera JSON es un lenguaje universal para gestión de
 > configuraciones. Prácticamente todo el resto de los sistemas de
 > configuración usan
@@ -225,7 +224,20 @@ gestión de fuentes; de esta forma se pueden probar diferentes
 configuraciones, crear nuevas versiones de la misma pero, sobre todo,
 tener claro en cada momento qué configuración es la que se está
 ejecutando en producción, que será habitualmente la que esté en una
-rama designada de la misma. 
+rama designada de la misma.
+
+>Todas estas pruebas se pueden hacer sobre una máquina virtual que se
+instale localmente con VirtualBox o cualquier otro sistema como Xen o
+con máquinas remotas. Algunos sitios, como
+[Koding](http://koding.com), ofrecen máquinas virtuales que no están
+encendidas de forma permanente, pero se pueden usar para pruebas. Como
+ejercicio, darse de alta en Koding y configurar la máquina virtual
+[creando un par clave pública/privada](http://www.petefreitag.com/item/532.cfm)
+y copiándola al directorio
+[`.ssh` y el fichero `authorized_keys2`](http://learn.koding.com/guides/ssh-into-your-vm/)
+para que se pueda conectar a la máquina sin necesidad de introducir el
+*password* cada vez. Si se tiene cualquier otra máquina virtual,
+proceder de la misma forma.
 
 Otros sistemas de gestión de configuración
 ---
