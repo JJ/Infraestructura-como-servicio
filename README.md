@@ -15,6 +15,16 @@ provisionamiento y monitorizació más usados hoy en día.
 Introducción
 ---
 
+La parte más baja de la pila de soluciones en nube, IaaS, consiste
+básicamente en el uso de máquinas virtuales junto con lo necesario
+para que funcionen: almacenamiento virtual y dispositivos virtuales de
+red. Ellas fueron las que iniciaron la nube, sobre todo con el
+lanzamiento de
+[EC2, Elastic Compute Cloud](http://es.wikipedia.org/wiki/Amazon_EC2),
+la *nube* de Amazon que vino asociada al de
+[S3, Simple Storage Service](http://en.wikipedia.org/wiki/Amazon_S3),
+que fue lanzado a la vez, 
+
 Las infraestructuras virtuales se gestionan a través de una serie de herramientas denominadas, en general,
 [gestores de configuración](http://en.wikipedia.org/wiki/Configuration_management). [Vagrant](http://en.wikipedia.org/wiki/Vagrant_%28software%29)
 es uno de ellos, pero también hay otros: [Chef](http://www.getchef.com/chef/), Salt y Puppet, por
