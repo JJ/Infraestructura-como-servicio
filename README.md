@@ -15,7 +15,7 @@ provisionamiento y monitorizació más usados hoy en día.
 Introducción
 ---
 
-La parte más baja de la pila de soluciones en nube, IaaS, consiste
+La parte más baja de la pila de soluciones en la nube, *IaaS* o Infraestructura como servicio,, consiste
 básicamente en el uso de máquinas virtuales junto con lo necesario
 para que funcionen: almacenamiento virtual y dispositivos virtuales de
 red. Ellas fueron las que iniciaron la nube, sobre todo con el
