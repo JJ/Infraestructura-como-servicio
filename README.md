@@ -61,7 +61,6 @@ A partir de un IaaS, hay todo tipo de servicios que se sitúan entre una infraes
 >Probar a lanzar una máquina virtual de demo, configurando las aplicaciones que se desee, y viendo qué posibilidades ofrece. Las MVs de demostración tienen que lanzarse obligatoriamente en la costa este americana y tener una aplicación instalada. Aparte, tarda unos buenos minutos en construirse (lo que no sé si se descontará o no de la hora total).
 
 
-
 Usando Chef para provisionamiento
 -----
 
@@ -557,7 +556,7 @@ es más fácil hacerlo en Ansible y/o en otro sistema operativo que no
 sea CentOS porque yo, por lo pronto, no he logrado instalar chef-solo
 en ninguna de las máquinas pre-configuradas de VagrantBoxes. 
 
->	Configurar tu máquina virtual usando vagrant con el provisionador ansible
+>Configurar tu máquina virtual usando vagrant con el provisionador ansible
 	
 
 Desde Vagrant se puede crear también una
