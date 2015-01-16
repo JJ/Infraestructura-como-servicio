@@ -212,7 +212,7 @@ Para usar `chef-solo` hay simplemente que instalar unos cuantos
 programas, pero en gran parte ya está automatizado:
 [aquí explica como usarlo en Ubuntu 12.04](http://www.wolfe.id.au/2012/09/10/how-i-use-chef-solo-with-ubuntu-12.04/),
 por ejemplo basándose en
-[este Gist (programas cortos en GitHug)](https://gist.github.com/wolfeidau/3328844)
+[este Gist (programas cortos en GitHub)](https://gist.github.com/wolfeidau/3328844)
 que instala todas las herramientas necesarias para comenzar a ejecutar
 Chef. 
 
@@ -388,7 +388,7 @@ comprobar si está presente o no (`state`). El que se trabaje con
 *idempotentes*, es decir, si se ejecutan varias veces darán el mismo
 resultado que si se ejecutan una sola vez. 
 
-> Desplegar la aplicación de DAI  con todos los módulos necesarios
+> Desplegar la aplicación realizada hasta el momento  con todos los módulos necesarios
 > usando un *playbook* de Ansible.
 
 
@@ -400,7 +400,13 @@ orquestación y gestión de las mismas, herramientas como
 [Vagrant](http://vagrantup.com) ayudan a hacerlo, aunque también
 Puppet e incluso Juju pueden hacer muchas de las funciones de
 Vagrant. Algunas alternativas son
-[Vortex](http://www.websecurify.com/extra/vortex.html) 
+[Vortex](http://www.websecurify.com/extra/vortex.html). Las herramientas de configuración permiten trabajar *dentro* de la máquina. Las orquestación y gestión se hace con herramientas que abstraen las características particulares del gestor y permite configurar las características de la máquina, así como trabajar con ellas de forma masiva y arrancarlas, apagarlas y conocer el status.
+
+Vagrant puede trabajar con
+[diferentes tipos de hipervisores](https://docs.vagrantup.com/v2/providers/index.html). Por
+omisión trabaja con VirtualBox, pero se puede configurar para trabajar
+con VMWare o con cualquier otro proveedor de máquinas virtuales,
+incluyendo virtualización ligera con docker.  
 
 La ventaja de Vagrant es que permite gestionar el ciclo de vida
 completo de una máquina virtual, desde la creación hasta su
