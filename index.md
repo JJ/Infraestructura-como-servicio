@@ -423,6 +423,24 @@ sistema interesante y popular, aunque algo más complicado de
 configurar que Ansible y Chef (aunque este último no permite ejecución
 remota en la opción `solo`).
 
+[Puppet](http://puppetlabs.com) es otra opción; no sé si popular, pero
+al menos existente y
+madura. [Tiene un lenguaje de configuración propio](https://davidwinter.me/introduction-to-puppet/),
+pero se puede usar desde Vagrant (que se verá a continuación). Es
+posible que sea tan potente, o más, que los anteriores, pero la falta
+de una documentación de introducción asequible y rápida, para mi, lo
+descarta.
+
+>En
+>[este artículo](http://kev009.com/wp/2012/01/configuration-management-software-sucks/)
+>dicen que en 2012 era la mejor opción, "but it sucks". En esos
+>momentos, por supuesto, no existían ninguno de los otros que
+>comentamos aquí o no estaban lo suficientemente maduros. De acuerdo
+>con
+>[este estudio](http://redmonk.com/sogrady/2013/12/06/configuration-management-2013/)
+>es difícil decir cuál se impondrá en el futuro, por lo que es
+>conveniente saber al menos uno más de ellos, aparte de Chef. 
+
 Finalmente, [Rex](http://rexify.org) es un sistema basado en Perl, que
 básicamente permite la ejecución remota de comandos y se puede usar
 para configuraciones simples en sistemas a los que se tenga acceso y
