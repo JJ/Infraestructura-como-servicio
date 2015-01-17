@@ -65,27 +65,34 @@ A partir de un IaaS, hay todo tipo de servicios que se sitúan entre una infraes
 Usando Chef para provisionamiento
 -----
 
- [Chef](http://www.getchef.com/chef/) es una herramienta que, en
+Cualquier instancia de máquina virtual que se adquiera debe
+ *provisionarse*, es decir, configurarse y, en el espíritu *DevOps*,
+ hacerse de forma reproducible y automática. Por eso se han venido
+ usando tradicionalmente diferentes herramientas para llevar a cabo
+ esa labor.
+ 
+ [Chef](http://www.getchef.com/chef/) es una de ellas y, en
  general, se usa en un servidor que se encarga no sólo de gestionar la
  configuración, sino también las versiones. Empezar a usarlo
  [es complicado](http://wiki.opscode.com/display/chef/Documentation).
  Sin embargo, como
  introducción a la gestión de configuraciones se puede usar
  [`chef-solo`](http://docs.opscode.com/chef_solo.html), una versión
- aislada que permite trabajar en una máquina desde la misma y que, por
- tanto, se puede usar como introducción y para probar
- configuraciones. 
+ aislada que permite trabajar en una máquina desde la misma (es decir,
+ tienes que conectarte a la máquina y ejecutar la configuración en
+ Chef dentro de ella) y que, por
+ tanto, se puede usar como introducción a la gestión de
+ configuraciones y para probar las mismas.
  
-
  
 > Hay varios tutoriales que te permiten, con relativa rapidez, comenzar
 >  a trabajar con Chef-solo en un servidor;
 >  [este te proporciona una serie de ficheros que puedes usar](http://www.opinionatedprogrammer.com/2011/06/chef-solo-tutorial-managing-a-single-server-with-chef/)
 >  y
->  [este otro es más directo, dando una serie de órdenes](http://www.mechanicalrobotfish.com/blog/2013/01/01/configure-a-server-with-chef-solo-in-five-minutes/). En
+>  [este otro es más directo, mostrándote una serie de órdenes](http://www.mechanicalrobotfish.com/blog/2013/01/01/configure-a-server-with-chef-solo-in-five-minutes/). En
 >  todo caso, se trata básicamente tener acceso a un servidor o máquina
 >  virtual, instalar una serie de aplicaciones en él y ejecutarlas sobre
->  un fichero de configuración
+>  un fichero de configuración. 
  
 
 En una máquina de tipo Ubuntu, hay que comenzar instalando Ruby y Ruby
@@ -94,7 +101,7 @@ puede instalar siempre como
 
 	gem install ohai chef
 
->con `sudo` si se está trabajando con el Ruby "del sistema", como siempre.
+>con `sudo` si se está trabajando con el Ruby "del sistema", también como siempre.
 
 [ohai](http://docs.opscode.com/ohai.html) acompaña a `chef` y es usado
 desde el mismo para comprobar características del nodo (el sistema en el que vamos a instalar algo)  antes de
@@ -105,9 +112,26 @@ Una [forma más rápida de instalar Chef](http://gettingstartedwithchef.com/firs
 	curl -L https://www.opscode.com/chef/install.sh | bash
 
 La última tendrá que ser `sudo bash` en caso de que se quiera instalar
-como administrador. Chef tendrá que estar instalado en el nodo sobre
-el que vayamos a ejecutar las recetas. 
+como administrador. Chef tendrá que estar instalado en el *nodo* (o
+máquina virtual) sobre
+el que vayamos a ejecutar las recetas.
 
+Para usar `chef-solo` hay simplemente que instalar unos cuantos
+programas, pero en gran parte ya está automatizado:
+[aquí explica como usarlo en Ubuntu 12.04](http://www.wolfe.id.au/2012/09/10/how-i-use-chef-solo-with-ubuntu-12.04/),
+por ejemplo basándose en
+[este Gist (programas cortos en GitHub)](https://gist.github.com/wolfeidau/3328844)
+que instala todas las herramientas necesarias para comenzar a ejecutar
+Chef. 
+
+> Este
+> [curso en video](http://nathenharvey.com/blog/2012/12/06/learning-chef-part-1/)
+>te enseña también a trabajar con Chef.
+
+En ciertos sabores de Linux puede ser algo complicado o en todo caso
+específico de ese sistema operativo, por lo que en muchos casos se
+ofrecen ya imágenes que tienen Chef (y otras herramientas, como
+Puppet) instaladas. 
 
 >Instalar `chef` en la máquina virtual que vayamos a usar o descargarse una máquina virtual con `chef` ya instalado. 
 
@@ -124,8 +148,9 @@ están escritos en Ruby.
 Vamos a empezar a escribir una recetilla del Chef. Generalmente,
 [escribir una receta es algo más complicado](http://reiddraper.com/first-chef-recipe/),
 pero comenzaremos por una receta muy simple que instale el
-imprescindible `emacs` y le asigne un nombre al nodo. Creamos el
-directorio `chef` en algún sitio conveniente y dentro de ese
+imprescindible `emacs` y cree una serie de ficheros en el mismo. Creamos el
+directorio `chef` en algún sitio conveniente (por ejemplo,
+`/home/miusuario/chef`; dentro de ese
 directorio irán diferentes ficheros.
 
 El fichero que contendrá efectivamente la receta se
@@ -148,7 +173,7 @@ que se meta, que podemos crear de un tirón con
 	mkdir -p chef/cookbooks/emacs/recipes
 
 Este fichero tiene tres partes: instala el paquete `emacs`, crea un
-directorio para documentos y dentro de él un fichero que explica, por
+directorio para documentos  y dentro de él un fichero que explica, por
 si hubiera duda, de qué se trata. Evidentemente, tanto caminos como
 nombres de usuario se deben cambiar a los correspondientes en la
 máquina virtual que estemos configurando.
@@ -160,8 +185,9 @@ incluirá una referencia a esta receta
 		"run_list": [ "recipe[emacs]" ]
 	}
 
-Este fichero hace referencia a un recetario, `emacs` y dado que no se
-especifica nada más se ejecutará la receta por defecto. 
+Este fichero, que evidentemente, está en formato JSON, hace referencia a un recetario, `emacs` y dado que no se
+especifica nada más se ejecutará la receta por defecto, la que hemos
+creado anteriormente. 
 
 Finalmente, el [fichero de configuración `solo.rb`](chef/solo.rb) incluirá referencias a ambos.
 
@@ -176,7 +202,9 @@ ejecutarlo,
 
 (si se ejecuta desde el directorio raíz), *que hay que ejecutar en la máquina en la que se vaya a ejecutar*). Esta orden producirá una
 serie de mensajes para cada una de las órdenes y, si todo va bien,
-tendremos este útil editor instalado.
+tendremos este útil editor instalado. `-c` indica que se trata del
+fichero de configuración. Si se ejecuta `chef-solo` desde el
+directorio `chef` tomará, por defecto, ese fichero. 
 
 El resultado será algo similar a esto:
 
@@ -199,22 +227,14 @@ El resultado será algo similar a esto:
 
 	Chef Client finished, 3 resources updated
 
-Donde se informa de la actividad de cada una de las tres acciones: instalar `emacs`, crear un directorio y finalmente crear un fichero con un contenido determinado. 
+Donde se informa de la actividad de cada una de las tres acciones:
+instalar `emacs`, crear un directorio y finalmente crear un fichero
+con un contenido determinado. Sólo se instalará `emacs` si,
+efectivamente, existe un paquete con ese nombre y si no se ha
+instalado anteriormente, claro. 
 
->Crear una receta para instalar el servidor web de alts prestaciones `nginx`, tu editor favorito (Atom, por ejemplo) y algún
->directorio y fichero que uses de forma habitual. 
-
-Para usar `chef-solo` hay simplemente que instalar unos cuantos
-programas, pero en gran parte ya está automatizado:
-[aquí explica como usarlo en Ubuntu 12.04](http://www.wolfe.id.au/2012/09/10/how-i-use-chef-solo-with-ubuntu-12.04/),
-por ejemplo basándose en
-[este Gist (programas cortos en GitHub)](https://gist.github.com/wolfeidau/3328844)
-que instala todas las herramientas necesarias para comenzar a ejecutar
-Chef. 
-
-> Este
-> [curso en video](http://nathenharvey.com/blog/2012/12/06/learning-chef-part-1/)
->te enseña también a trabajar con Chef.
+>Crear una receta para instalar el servidor web de alts prestaciones `nginx`, tu editor favorito (`vim`, por ejemplo) y algún
+>directorio y fichero que uses de forma habitual.
 
 Cuando se está trabajando con un IaaS, en muchos casos tendrán
 imágenes ya preparadas con Chef instalado. Por ejemplo, en
@@ -263,7 +283,7 @@ Otros sistemas de gestión de configuración
 ---
 
 Las principales alternativas a Chef son [Ansible](http://ansible.com),
-[Salt](http://www.saltstack.com/) y [Puppet](http://docs.puppetlabs.com/guides/installation.html). Todos ellos se comparan en
+[Salt](http://www.saltstack.com/), [Rex](http://www.rexify.org/) y [Puppet](http://docs.puppetlabs.com/guides/installation.html). Todos ellos se comparan en
 [este artículo](http://www.infoworld.com/d/data-center/review-puppet-vs-chef-vs-ansible-vs-salt-231308),
 aunque los principales contendientes son
 [Puppet y Chef, sin que ninguno de los dos sea perfecto](http://www.infoworld.com/d/data-center/puppet-or-chef-the-configuration-management-dilemma-215279?source=fssr). 
@@ -335,7 +355,7 @@ esta forma:
 
 	$ ansible azure -m shell ls
 	
-haciendo uso del módulo `shell`. Hay muchos
+haciendo uso del módulo `shell` (si está instalado). Hay muchos
 [más módulos](http://docs.ansible.com/modules.html) a los que se le
 pueden enviar comandos del tipo "variable = valor". Por ejemplo, se
 puede trabajar con servidores web o
@@ -386,6 +406,27 @@ resultado que si se ejecutan una sola vez.
 
 > Desplegar la aplicación realizada hasta el momento  con todos los módulos necesarios
 > usando un *playbook* de Ansible.
+
+[Salt](http://saltstack.com) también es otro sistema de configuración
+popular. Está también basado en Python y considera el concepto de
+[estado](http://docs.saltstack.com/en/latest/topics/tutorials/walkthrough.html)
+fundamental. Tiene un sistema cliente-servidor, o amo-esbirro
+(*minion*), que necesita instalar servicios tanto en el amo como en el
+esbirro para empezar a trabajar con él (a diferencia de Ansible, que
+permite ejecutar remotamente con facilidad). Los ficheros de
+configuración están basados en YAML y, en general, se trata de un
+sistema interesante y popular, aunque algo más complicado de
+configurar que Ansible y Chef (aunque este último no permite ejecución
+remota en la opción `solo`).
+
+Finalmente, [Rex](http://rexify.org) es un sistema basado en Perl, que
+básicamente permite la ejecución remota de comandos y se puede usar
+para configuraciones simples en sistemas a los que se tenga acceso y
+donde no haya nada razonable instalado. Necesita conocer de antemano
+el tipo del sistema operativo, ya que lanza diferentes comandos
+dependiendo de qué se trate, por lo que para sabores exóticos de Linux
+puede dar algún problema. Para configuraciones simples y una puesta a
+punto rápida, es tan fácil trabajar con él como con Ansible.
 
 
 Orquestación de máquinas virtuales
