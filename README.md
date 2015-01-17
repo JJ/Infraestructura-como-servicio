@@ -10,7 +10,7 @@
 4. Aprender lenguajes de configuración usados en infraestructuras virtuales.
 2. Saber cómo aplicarlos en un caso determinado.
 3. Conocer los sistemas de gestión de la configuración,
-provisionamiento y monitorizació más usados hoy en día.
+provisionamiento y monitorización más usados hoy en día.
 
 Introducción
 ---
@@ -23,7 +23,7 @@ lanzamiento de
 [EC2, Elastic Compute Cloud](http://es.wikipedia.org/wiki/Amazon_EC2),
 la *nube* de Amazon que vino asociada al de
 [S3, Simple Storage Service](http://en.wikipedia.org/wiki/Amazon_S3),
-que fue lanzado a la vez, un servicio de almacenamiento de datos (que puede usarse también de forma independiente), y [Amazon EBS (Elastic Block Store)](http://en.wikipedia.org/wiki/Amazon_Elastic_Block_Store), un almacenamiento permanente para imágenes de sistemas operativos completos, usables, por ejemplo, para almacenar el estado de una máquina virtual completo. La presencia de la palabra *elastic* en dos de estas ofertas indica la principal diferencia entre la nube y el uso de un VPS o Servidor Privado Virtual: mientras que un VPS es simplemente una máquina virtual con recursos limitados, los recursos a los que tienes acceso desde la nube son *elásticos* y se van ampliando según la demanda que haya de la forma que se haya definido y de forma transparente para la aplicación y para el usuario, con el único límite que el usuario haya definido y pueda asumir.
+que fue lanzado a la vez, un servicio de almacenamiento de datos (que puede usarse también de forma independiente), y [Amazon EBS (Elastic Block Store)](http://en.wikipedia.org/wiki/Amazon_Elastic_Block_Store), un almacenamiento permanente para imágenes de sistemas operativos completos, utilizables, por ejemplo, para almacenar el estado de una máquina virtual completo. La presencia de la palabra *elastic* en dos de estas ofertas indica la principal diferencia entre la nube y el uso de un VPS o Servidor Privado Virtual: mientras que un VPS es simplemente una máquina virtual con recursos limitados, los recursos a los que tienes acceso desde la nube son *elásticos* y se van ampliando según la demanda que haya de la forma que se haya definido y de forma transparente para la aplicación y para el usuario, con el único límite que el usuario haya definido y pueda asumir.
 
 Después de Amazon han llegado muchas otros productos al mercado: [Azure de Microsoft](http://en.wikipedia.org/wiki/Microsoft_Azure) y [Google Compute Engine](http://en.wikipedia.org/wiki/Google_Compute_Engine) son posiblemente los más populares. Los productos son similares en precio y en prestaciones, lo que ocurre es que difieren en el ecosistema de productos desarrollados alrededor, en los que Amazon está, por lo pronto, más desarrollado que el resto.
 
@@ -139,7 +139,7 @@ que instala todas las herramientas necesarias para comenzar a ejecutar
 Chef. 
 
 > Este
-> [curso en video](http://nathenharvey.com/blog/2012/12/06/learning-chef-part-1/)
+> [curso en vídeo](http://nathenharvey.com/blog/2012/12/06/learning-chef-part-1/)
 >te enseña también a trabajar con Chef.
 
 En ciertos sabores de Linux puede ser algo complicado o en todo caso
@@ -247,7 +247,7 @@ con un contenido determinado. Sólo se instalará `emacs` si,
 efectivamente, existe un paquete con ese nombre y si no se ha
 instalado anteriormente, claro. 
 
->Crear una receta para instalar el servidor web de alts prestaciones `nginx`, tu editor favorito (`vim`, por ejemplo) y algún
+>Crear una receta para instalar el servidor web de altas prestaciones `nginx`, tu editor favorito (`vim`, por ejemplo) y algún
 >directorio y fichero que uses de forma habitual.
 
 Cuando se está trabajando con un IaaS, en muchos casos tendrán
@@ -307,7 +307,7 @@ De todas ellas, vamos a
 que parece ser uno de los que se está desarrollando con más intensidad
 últimamente. [Ansible es](http://en.wikipedia.org/wiki/Ansible_%28software%29)
 sistema de gestión remota de configuración que permite gestionar
-simultáneamente miles de sistemas diferenets. Está basado en YAML para
+simultáneamente miles de sistemas diferentes. Está basado en YAML para
 la descripción de los sistemas y escrito en Python. 
 
 Se instala como un módulo de Python, usando por ejemplo la utilidad de
@@ -360,7 +360,7 @@ ejecutar comandos de forma remota
 
 	$ ansible azure -u jjmerelo -a df
 	
-nos mostraría en todas las máqunias de azure la organización del
+nos mostraría en todas las maquinas de azure la organización del
 sistema de ficheros (que es lo que hace el comando `df`). Una vez más,
 `-u` es opcional. 
 
@@ -469,7 +469,7 @@ orquestación y gestión de las mismas, herramientas como
 [Vagrant](http://vagrantup.com) ayudan a hacerlo, aunque también
 Puppet e incluso Juju pueden hacer muchas de las funciones de
 Vagrant. Algunas alternativas son
-[Vortex](http://www.websecurify.com/extra/vortex.html). Las herramientas de configuración permiten trabajar *dentro* de la máquina. Las orquestación y gestión se hace con herramientas que abstraen las características particulares del gestor y permite configurar las características de la máquina, así como trabajar con ellas de forma masiva y arrancarlas, apagarlas y conocer el status.
+[Vortex](http://www.websecurify.com/extra/vortex.html). Las herramientas de configuración permiten trabajar *dentro* de la máquina. Las orquestación y gestión se hace con herramientas que abstraen las características particulares del gestor y permite configurar las características de la máquina, así como trabajar con ellas de forma masiva y arrancarlas, apagarlas y conocer el estatus.
 
 Vagrant puede trabajar con
 [diferentes tipos de hipervisores](https://docs.vagrantup.com/v2/providers/index.html). Por
@@ -574,10 +574,10 @@ se puede usar un fichero externo o incluso alojado en un sitio web
 [este para provisionar nginx y node](https://gist.github.com/DamonOehlman/5754302)
 (no leer hasta después de hacer el ejercicio anterior).
 
-El poblema con los guiones de *shell*
+El problema con los guiones de *shell*
 
 > y no sé por qué diablos pongo
->guiones si pongo shell, podía poner scripts de shell directametne y
+>guiones si pongo shell, podía poner scripts de shell directamente y
 >todo el mundo me entendería, o guiones de la concha y nadie me
 >entendería
 
@@ -599,7 +599,7 @@ que usa
 puede provisionar, por ejemplo, una máquina CentOS. 
 
 Una vez preinstalado chef (lo que también podíamos haber hecho con
-[una máquina que ya lo tuviera instalado, de las que hay muchas en `vagrantbox.es`](http://www.vagrantbox.es/)git co
+[una máquina que ya lo tuviera instalado, de las que hay muchas en `vagrantbox.es`](http://www.vagrantbox.es/)
 y de hecho es la mejor opción porque chef-solo no se puede instalar en
 la versión 6.5 de Centos fácilmente por no tener una versión
 actualizada de Ruby)
