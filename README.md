@@ -54,6 +54,20 @@ sistema de configuración también, aunque específico de Ubuntu y `docker`, un 
 >ordenador. [Échale un vistazo al tutorial](https://www.docker.com/tryit/)
 >para hacerte una idea de sus capacidades.
 
+A partir de aquí te hará falta una máquina virtual para trabajar,
+preferiblemente una en la que puedas instalar cualquier tipo de
+sistema operativo y que esté *limpio* o al menos con el mínimo
+necesario. Puedes usar [koding.com](http://koding.com), por ejemplo,
+que proporciona una máquina virtual para desarrollo que puedes
+desconectar cuando dejes de hacer los ejercicios. También puedes,
+previa alta de tarjeta de crédito, usar las máquinas virtuales
+gratuitas que proporcionan Google, Amazon o Azure (no tendrás que
+pagar si no te pasas de los recursos gratuitos). También puedes
+trabajar con máquinas virtuales en tu propio ordenador usando
+VirtualBox o cualquier otro hipervisor; en este caso necesitarás una
+conexión adecuada para bajarte rápidamente las imágenes sobre las que
+trabajarás. 
+
 ##Trabajando con la nube
 
 A partir de un IaaS, hay todo tipo de servicios que se sitúan entre una infraestructura como servicio y otros más avanzados de tipo PaaS o incluso SaaS; en muchos casos ofrecen demos o máquinas virtuales que se pueden usar por tiempo limitado. Por ejemplo, [Bitnami](http://bitnami.com), una empresa originalmente española, ofrece máquinas virtuales con aplicaciones ya instaladas que se pueden lanzar como demo.
